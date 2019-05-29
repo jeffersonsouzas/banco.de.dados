@@ -1,0 +1,18 @@
+use db_livraria;
+create table bkp_autores(
+id int not null auto_increment,
+nome varchar(200) not null,
+email varchar(200) not null,
+tipo enum('DELETE','UPDATE') not null,
+horario datetime not null default current_timestamp(),
+primary key(id)
+);
+
+delimiter #
+create trigger tg_deletar_autor before delete
+on autores
+for each row
+begin
+	insert into bkp_autores (autor_id, nome, email, tipo) values (OLD.id, OLD.nome, OLD.email, 'DELETE');
+end#
+delimiter ;
