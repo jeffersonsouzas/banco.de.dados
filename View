@@ -1,0 +1,5 @@
+//criando View autores alterados
+create view vw_autores_alterados AS select * from bkp_autores where tipo = 'UPDATE';
+
+//criando View autores deletados
+create view vw_autores_deletados AS select * from bkp_autores where tipo = 'DELETE';
