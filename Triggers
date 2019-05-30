@@ -8,6 +8,7 @@ horario datetime not null default current_timestamp(),
 primary key(id)
 );
 
+//Delete
 delimiter #
 create trigger tg_deletar_autor before delete
 on autores
@@ -16,3 +17,14 @@ begin
 	insert into bkp_autores (autor_id, nome, email, tipo) values (OLD.id, OLD.nome, OLD.email, 'DELETE');
 end#
 delimiter ;
+
+//Alterar
+delimiter #
+create trigger tg_alterar_autor before update
+on autores
+for each row
+begin  insert into bkp_autores (autor_id, nome, email, tipo) values (OLD.id, OLD.nome, OLD.email, 'UPDATE'); 
+end#
+delimiter ;
+
+//
