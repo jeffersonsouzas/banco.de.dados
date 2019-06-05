@@ -1,0 +1,46 @@
+Doker container mysql
+//Criar usuário
+
+create user 'maria' identified by 'Suporte99';<-- Acessa em qualquer IP
+create user 'joao'@'localhost'identified by 'Suporte99'; <-- Acesso apenas na maquina local.
+create user 'joao'@'200.124.5.5'identified by 'Suporte99';<--- Outro usuário que acessa apenas no IP informado 
+
+// Como é gerado o da linha 4
+create user 'maria'@'%' identified by 'Suporte99';
+
+//Listar usuários
+select user, host from mysql.user;
+
+//Deletar usuário
+drop user 'joao'@'localhost';
+
+//Alterar a senha
+set password for 'maria' = password('root');
+
+// Conceder permissões
+Grant all on db_livraria.autores to 'maria';<-- permissão para tabela
+Grant all on db_livraria.* to 'maria';<-- Permissão a todas a tabela
+Grant insert, update, select on db_livraria.autores to 'maria';
+show grants for 'maria';<-- Mostrar permissões
+Grant all on db_livraria.* to 'maria';<-- pode conceder as permissões que tem
+
+  //Permissões
+  insert, update, delete ,select, drop, alter,create view, create trigger
+
+//revogar permissões
+revoke update on db_livraria.autores from 'maria';
+
+1_ create user 'ana' identified by 'Suporte99';
+create user 'maria' identified by 'Suporte99';
+create user 'mario' identified by 'Suporte99';
+create user 'joao' identified by 'Suporte99';
+
+2_ grant select, insert, alter on db_livraria.autores to 'ana';
+grant all on db_livraria.livros to 'maria';
+grant select, insert, alter on db_livraria.livros to 'mario';
+grant delete on db_livraria.livros to 'mario';
+grant create view, insert, select, update, delete on db_livraria.* to 'joao'@'localhost';
+
+3_ revoke delete on db_livraria.livros from 'mario';
+revoke alter on db_livraria.livros from 'mario';
+revoke create view on db_livraria.livros from 'maria';
